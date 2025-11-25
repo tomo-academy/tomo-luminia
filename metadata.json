@@ -1,0 +1,5 @@
+{
+  "name": "Luminia by TOMO",
+  "description": "Fast and efficient image generation using the Gemini 2.5 Flash Image model.",
+  "requestFramePermissions": []
+}
