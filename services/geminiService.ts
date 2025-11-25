@@ -10,8 +10,15 @@ export const generateImage = async (
   referenceImageBase64?: string
 ): Promise<string> => {
   try {
-    // IMPORTANT: Create the instance immediately before the call to pick up the latest injected process.env.API_KEY
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    // IMPORTANT: In Vercel/Vite, we must check import.meta.env.VITE_API_KEY
+    // process.env.API_KEY works in some environments, but Vercel hides it from the browser for security.
+    const apiKey = process.env.API_KEY || (import.meta as any).env?.VITE_API_KEY;
+
+    if (!apiKey) {
+      throw new Error("API Key missing. Please set VITE_API_KEY in Vercel Environment Variables.");
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
     
     const parts: any[] = [];
     
